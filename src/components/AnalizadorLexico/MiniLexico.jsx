@@ -3,9 +3,6 @@ import React, { useState } from "react";
 const MiniLexico = () => {
   const [inputText, setInputText] = useState("");
   const [tokens, setTokens] = useState([]);
-  //const [state, setState] = useState(0);
-  const [token, setToken] = useState("");
-  let state = 0;
 
   const isNumber = (char) => {
     let acsii = char.charCodeAt(0);
@@ -33,11 +30,16 @@ const MiniLexico = () => {
     let tokens = [];
     let currentTokenType = "";
 
-    for (let i = 0; i < inputText.length; i++) {
-      const char = inputText[i];
+    for (const char of inputText) {
 
       switch (true) {
         case isSpace(char):
+          if (currentTokenType === "number" && !currentToken.includes(".")) {
+            currentTokenType = "unknown";
+            tokens.push({ type: currentTokenType, value: currentToken });
+            currentToken = "";
+            currentTokenType = "";
+          }
           if (currentToken !== "") {
             tokens.push({ type: currentTokenType, value: currentToken });
             currentToken = "";
@@ -62,11 +64,16 @@ const MiniLexico = () => {
             currentToken += char;
             currentTokenType = "number";
           } else {
-            if (currentToken !== "") {
+            if (currentTokenType === "id") {
+              currentToken += char;
+            } else if (currentTokenType === "unknown") {
+              currentToken += char;
+            } else if (currentToken !== "") {
               tokens.push({ type: currentTokenType, value: currentToken });
+            } else {
+              currentToken = char;
+              currentTokenType = "unknown";
             }
-            currentToken = char;
-            currentTokenType = "unknown";
           }
           break;
 
@@ -76,26 +83,30 @@ const MiniLexico = () => {
             currentTokenType = "id";
           } else {
             if (currentToken !== "") {
-              tokens.push({ type: currentTokenType, value: currentToken });
+              currentToken += char;
+              currentTokenType = "unknown";
+              //tokens.push({ type: currentTokenType, value: currentToken });
             }
-            currentToken = char;
-            currentTokenType = "unknown";
+            //currentToken = char;
           }
           break;
 
         default:
           if (currentToken !== "") {
-            tokens.push({ type: currentTokenType, value: currentToken });
-            currentToken = "";
-            currentTokenType = "";
+            //tokens.push({ type: currentTokenType, value: currentToken });
+            currentToken += char;
+            currentTokenType = "unknown";
           }
-          currentToken = char;
-          currentTokenType = "unknown";
+
+          //tokens.push({ type: currentTokenType, value: currentToken });
           break;
       }
     }
 
     if (currentToken !== "") {
+      if (currentTokenType === "number" && !currentToken.includes(".")) {
+        currentTokenType = "unknown";
+      }
       tokens.push({ type: currentTokenType, value: currentToken });
     }
 
@@ -112,11 +123,11 @@ const MiniLexico = () => {
     <>
       <div>
         <textarea
+          cols={100}
+          rows={5}
           value={inputText}
           onChange={(e) => setInputText(e.target.value)}
-        >
-          {" "}
-        </textarea>
+        ></textarea>
         <button onClick={analyzeInput}>Analyze</button>
         <div>
           <h2>Tokens:</h2>
