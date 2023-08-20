@@ -31,10 +31,11 @@ const MiniLexico = () => {
     let currentTokenType = "";
 
     for (const char of inputText) {
+      //const char = inputText[i];
 
       switch (true) {
         case isSpace(char):
-          if (currentTokenType === "number" && !currentToken.includes(".")) {
+          if (currentTokenType === "real" && !currentToken.includes(".")) {
             currentTokenType = "unknown";
             tokens.push({ type: currentTokenType, value: currentToken });
             currentToken = "";
@@ -48,7 +49,7 @@ const MiniLexico = () => {
           break;
 
         case isPoint(char):
-          if (currentTokenType === "number" && !currentToken.includes(".")) {
+          if (currentTokenType === "real" && !currentToken.includes(".")) {
             currentToken += char;
           } else {
             if (currentToken !== "") {
@@ -60,9 +61,9 @@ const MiniLexico = () => {
           break;
 
         case isNumber(char):
-          if (currentTokenType === "number" || currentTokenType === "") {
+          if (currentTokenType === "real" || currentTokenType === "") {
             currentToken += char;
-            currentTokenType = "number";
+            currentTokenType = "real";
           } else {
             if (currentTokenType === "id") {
               currentToken += char;
@@ -104,7 +105,7 @@ const MiniLexico = () => {
     }
 
     if (currentToken !== "") {
-      if (currentTokenType === "number" && !currentToken.includes(".")) {
+      if (currentTokenType === "real" && !currentToken.includes(".")) {
         currentTokenType = "unknown";
       }
       tokens.push({ type: currentTokenType, value: currentToken });
