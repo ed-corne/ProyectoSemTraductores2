@@ -3,9 +3,10 @@
 
 Este proyecto consiste en la implementación de un Analizador Léxico utilizando la combinación de las tecnologías React y Vite. Un analizador léxico es una parte esencial de los compiladores que se encarga de transformar el código fuente en una secuencia de tokens significativos, facilitando así el proceso de análisis sintáctico y semántico.
 
-## Enlaces a Carpetas
-
-- [Carpeta del analizador lexico](./src/components/AnalizadorLexico): Contiene los componentes de React utilizados en la interfaz de usuario.
+## 📂 Actividades de la materia
+1. [¿Qué es es un analizador léxico ?](./src/components/AnalizadorLexico)
+2. [Mini generador léxico ](./src/components/AnalizadorLexico/mini/)
+3. [Analizador léxico completo.](./src/components/AnalizadorLexico/complete/)
 
 ## Características
 

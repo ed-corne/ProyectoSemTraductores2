@@ -5,10 +5,10 @@ Este es un analizador léxico completo implementado en React que tiene la capaci
 ## Capturas de Pantalla
 
 ### Menú
-![Menú](src\assets\menu_lexico.png)
+![Menú](https://github.com/ed-corne/ProyectoSemTraductores2/blob/main/src/assets/menu_lexico.png)
 
 ### Funcionamiento del Analizador
-![Funcionamiento del Analizador](src\assets\cmplete_lexico.png)
+![Funcionamiento del Analizador](https://github.com/ed-corne/ProyectoSemTraductores2/blob/main/src/assets/cmplete_lexico.png)
 
 
 ## Características
