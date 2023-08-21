@@ -1,0 +1,57 @@
+.page {
+  height: 100vh;
+  width: 70vw;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: start;
+  align-items: center;
+}
+
+.complete__page {
+  width: 100%;
+  min-height: 50%;
+  background-color: #b9f1d6;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: start;
+  border-radius: 0.625rem;
+  padding: 1.875rem;
+}
+
+.inputArea {
+  width: 45%;
+}
+
+.inputArea__area {
+    width: 100%;
+    height: 30vh;
+    resize: none;
+    border-radius: 1rem;
+    border: none;
+    margin: 15px;
+
+  }
+
+.tokensArea {
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+}
+
+.tokensArea__title{
+    color: #294380;
+
+}
+
+.tokenArea__table{
+    text-align: center;
+    color: #294380;
+    background-color: #bcf2ef;
+    margin: 15px;
+    border-radius: .625rem;
+}
+
+

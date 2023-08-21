@@ -1,34 +1,47 @@
 import React, { useState } from "react";
 import { analyzeInput } from "./AnalyzeInput";
+import '../../styles/lexicalAn.css';
 //2 hola23 25 24.23 80 + 90-10 mundo 80saludo d 3
 const CompleteLexico = () => {
   const [inputText, setInputText] = useState("");
   const [tokens, setTokens] = useState([]);
 
   return (
-    <>
-      <div>
+    <div className="page">
+    <div className="complete__page">
+      <div className="inputArea">
+      <h2 className="tokensArea__title">Inputs:</h2>
         <textarea
-          cols={100}
-          rows={5}
           value={inputText}
           onChange={(e) => setInputText(e.target.value)}
+          className="inputArea__area"
         ></textarea>
-        <button onClick={() => setTokens(analyzeInput(inputText))}>
+        <button
+          onClick={() => setTokens(analyzeInput(inputText))}
+          className="inputArea__button"
+        >
           Analyze
         </button>
-        <div>
-          <h2>Tokens:</h2>
-          <ul>
-            {tokens.map((token, index) => (
-              <li key={index}>
-                Symbol: {token.symbol}, Value: {token.value}
-              </li>
-            ))}
-          </ul>
-        </div>
       </div>
-    </>
+      <div className="tokensArea">
+        <h2 className="tokensArea__title">Tokens:</h2>
+        <table className="tokenArea__table">
+          <tr className="tokenArea__row">
+            <th className="tokenArea__column">Symbol</th>
+            <th className="tokenArea__column">Type</th>
+            <th className="tokenArea__column">Value</th>
+          </tr>
+          {tokens.map((token, index) => (
+            <tr key={index} className="tokenArea__row">
+              <td className="tokenArea__column">{token.symbol}</td>
+              <td className="tokenArea__column">{token.type}</td>
+              <td className="tokenArea__column">{token.value}</td>
+            </tr>
+          ))}
+        </table>
+      </div>
+    </div>
+    </div>
   );
 };
 

@@ -1,0 +1,36 @@
+.homePage {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+}
+.homePage__title{
+  color: #294380;
+}
+
+.homePage__menu {
+    width: 35rem;
+    height: 30rem;
+    background-color: #b9f1d6;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    border-radius: .625rem;
+}
+
+.homePage__link{
+    width: 70%;
+    height: 10%;
+    background-color: #f1f6ce;
+    margin: 16px;
+    border-radius: .625rem;
+    text-decoration: none;
+    color: #69d2cd;
+    padding: .625rem;
+    font-size: 1.5rem;
+}
+
