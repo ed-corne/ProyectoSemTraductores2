@@ -5,10 +5,10 @@ Este es un mini analizador léxico implementado en React que tiene la capacidad 
 ## Capturas de Pantalla
 
 ### Menú
-![Menú](src\assets\menu_lexico.png)
+![Menú](https://github.com/ed-corne/ProyectoSemTraductores2/blob/main/src/assets/menu_lexico.png)
 
 ### Funcionamiento del Analizador
-![Funcionamiento del Analizador](src\assets\mini_lexico.png)
+![Funcionamiento del Analizador](https://github.com/ed-corne/ProyectoSemTraductores2/blob/main/src/assets/mini_lexico.png)
 
 
 ## Características
