@@ -31,7 +31,9 @@
     resize: none;
     border-radius: 1rem;
     border: none;
-    margin: 15px;
+    margin: .9375rem;
+    padding: .9375rem;
+    font-size: 1.5rem;
 
   }
 
@@ -53,6 +55,11 @@
     margin: 15px;
     border-radius: .625rem;
     
+}
+
+.--clean {
+  background-color: #f2bcbc;
+  margin: 1.875rem;
 }
 
 

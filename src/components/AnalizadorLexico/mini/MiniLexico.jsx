@@ -121,27 +121,37 @@ const MiniLexico = () => {
   /////////
 
   return (
-    <>
-      <div>
-        <textarea
-          cols={100}
-          rows={5}
-          value={inputText}
-          onChange={(e) => setInputText(e.target.value)}
-        ></textarea>
-        <button onClick={analyzeInput}>Analyze</button>
-        <div>
-          <h2>Tokens:</h2>
-          <ul>
+    <div className="page">
+      <h2 className="tokensArea__title">Mini lexical analyzer </h2>
+      <div className="complete__page">
+        <div className="inputArea">
+          <h2 className="tokensArea__title">Inputs:</h2>
+          <textarea
+            value={inputText}
+            onChange={(e) => setInputText(e.target.value)}
+            className="inputArea__area"
+          ></textarea>
+          <button onClick={analyzeInput} className="inputArea__button">
+            Analyze
+          </button>
+        </div>
+        <div className="tokensArea">
+          <h2 className="tokensArea__title">Tokens:</h2>
+          <table className="tokenArea__table">
+            <tr className="tokenArea__row">
+              <th className="tokenArea__column">Symbol</th>
+              <th className="tokenArea__column">Value</th>
+            </tr>
             {tokens.map((token, index) => (
-              <li key={index}>
-                Type: {token.type}, Value: {token.value}
-              </li>
+              <tr key={index} className="tokenArea__row">
+                <td className="tokenArea__column">{token.type}</td>
+                <td className="tokenArea__column">{token.value}</td>
+              </tr>
             ))}
-          </ul>
+          </table>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

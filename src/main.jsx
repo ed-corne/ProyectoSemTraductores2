@@ -3,8 +3,8 @@ import ReactDOM from 'react-dom/client'
 import './index.css'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import Home from './pages/Home.jsx';
-import MiniLexico from './components/AnalizadorLexico/MiniLexico';
-import CompleteLexico from './components/AnalizadorLexico//CompleteLexico.jsx';
+import MiniLexico from './components/AnalizadorLexico/mini/MiniLexico';
+import CompleteLexico from './components/AnalizadorLexico/complete/CompleteLexico';
 import Error from './pages/Error.jsx';
 
 // create the browser router and configure the routes of the app
