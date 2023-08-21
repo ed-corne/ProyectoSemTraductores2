@@ -28,13 +28,11 @@ const CompleteLexico = () => {
         <table className="tokenArea__table">
           <tr className="tokenArea__row">
             <th className="tokenArea__column">Symbol</th>
-            <th className="tokenArea__column">Type</th>
             <th className="tokenArea__column">Value</th>
           </tr>
           {tokens.map((token, index) => (
             <tr key={index} className="tokenArea__row">
               <td className="tokenArea__column">{token.symbol}</td>
-              <td className="tokenArea__column">{token.type}</td>
               <td className="tokenArea__column">{token.value}</td>
             </tr>
           ))}
