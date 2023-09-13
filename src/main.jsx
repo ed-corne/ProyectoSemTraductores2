@@ -6,6 +6,7 @@ import Home from './pages/Home.jsx';
 import MiniLexico from './components/AnalizadorLexico/mini/MiniLexico';
 import CompleteLexico from './components/AnalizadorLexico/complete/CompleteLexico';
 import Error from './pages/Error.jsx';
+import Sintactic from './components/AnalizadorSintactico/Mini/sintactic';
 
 // create the browser router and configure the routes of the app
 //using a queue of routes
@@ -23,6 +24,11 @@ const router = createBrowserRouter([
   {
     path: "/complete",
     element: <CompleteLexico />,
+    errorElement: <Error />,
+  },
+  {
+    path: "/sintactic",
+    element: <Sintactic />,
     errorElement: <Error />,
   },
 ]);

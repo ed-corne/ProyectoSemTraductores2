@@ -4,14 +4,17 @@ import "../styles/home.css";
 const Home = () => {
   return (
     <div className="homePage">
-      <h1 className="homePage__title">Lexical analyzer</h1>
+      <h1 className="homePage__title">Analyzers</h1>
       <div className="homePage__menu">
         <Link to="/mini" className="homePage__link">
-          Mini
+          Mini Lexical
         </Link>
 
         <Link to="/complete" className="homePage__link">
-          complete
+          Complete Lexical
+        </Link>
+        <Link to="/sintactic" className="homePage__link">
+          Sintactico
         </Link>
       </div>
     </div>
