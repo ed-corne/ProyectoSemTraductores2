@@ -1,16 +1,34 @@
-### Mini Analizador sintactico 
+## 🌿 Analizador Sintáctico (Implementación usando Objetos)
 
-Primero se realizo un archivo en excel simulando las gramáticas, para despues implementarlas en el codigo.
+🍀 En esta práctica se utilizo una pila de objetos, se creo una clase ElementoPila, y 3 mas que heredan de esta clase las cuales son **Terminal, NoTerminal y Elemento**.
 
-## Ejercicio 1
-**Gramatica:** E -->  < id > + < id >
+- [Clase Elemento pila](src/components/AnalizadorSintactico/Mini/ElementoPila.js)
 
-![Simulando Gramatica 1](https://github.com/ed-corne/ProyectoSemTraductores2/blob/main/src/assets/mini_sintactico_exel1.png)
+🍃 Despues de esto se cargo la gramatica en una tabla **LR(1)**.
 
-## Ejercicio 2
-**Gramatica:** E --> < id > + E | < id >
+- [Gramatica](src/components/AnalizadorSintactico/Mini/Gramatica.js)
 
-![Simulando Gramatica 1](https://github.com/ed-corne/ProyectoSemTraductores2/blob/main/src/assets/mini_sintactico_exel1.png)
+🌱 Posteriormente se creo una **funcion para analizar la entrada**, esto usando el analizador lexico para determinar los tokens y despues ya proceder con el algoritmo del analisis sintactico.
 
-------
+- [Funcion para el analisis sintactico](src/components/AnalizadorSintactico/Mini/Analyze.js)
+
+🌳 Finalmente solo se crea una **interfaz grafica** para renderizar la informacion del analisis.
+
+- [Componente que renderiza los datos del analisis.](src/components/AnalizadorSintactico/Mini/sintactic.jsx)
+
+### 📷 Imagenes del funcionamiento del programa
+
+1. Inicio de la pagina
+
+    ![Menu](https://github.com/ed-corne/ProyectoSemTraductores2/blob/main/src/assets/newMenu.png)
+
+2. Interfaz del analizador sintactico
+
+    ![Mini sintactico](https://github.com/ed-corne/ProyectoSemTraductores2/blob/main/src/assets/miniSintac1.png)
+
+3. Funcionamiento del analizador sintactico
+
+    ![Funcionamiento del sintactico](https://github.com/ed-corne/ProyectoSemTraductores2/blob/main/src/assets/miniSintac2.png)
+
+-----
 Edwin Cornejo 💚👨🏻‍💻

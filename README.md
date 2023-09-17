@@ -9,8 +9,9 @@
 2. [Mini generador léxico ](./src/components/AnalizadorLexico/mini/)
 3. [Analizador léxico completo.](./src/components/AnalizadorLexico/complete/)
 ### 🌿 Analizador Sintáctico 
-5. [Mini analizador sintáctico (Excel)](./src/components/AnalizadorSintactico/Mini/)
+5. [Mini analizador sintáctico (Excel)](./src/components/AnalizadorSintactico/exel/)
 6. [Mini analizador sintáctico (Codigo)](./src/components/AnalizadorSintactico/Mini/)
+7. [Analizador Sintáctico (Implementación usando Objetos)](./src/components/AnalizadorSintactico/Mini/)
 
 ## Estructura del Proyecto
 
@@ -63,4 +64,4 @@
 
 ---
 
-**Autor:** Edwin Joel Cornejo Chavez <edwin.cornejo9126@alumnos.udg.mx> 💚
+**Autor:** Edwin Joel Cornejo Chavez <edwin.cornejo9126@alumnos.udg.mx> 💚👨🏻‍💻
