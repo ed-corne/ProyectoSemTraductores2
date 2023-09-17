@@ -1,83 +1,84 @@
-// Define la tabla LR(1)
+// import the funcion to analyze the input, it is the lexical analyzer
 import { analyzeInput } from "../../AnalizadorLexico/complete/AnalyzeInput";
-const lr1Table = {
-    0: { 0: 'd2', 5: '', 23: '', E: 1 },
-    1: { 0: '', 5: 'r2', 23: 'r2', E: '' },
-    2: { 0: '', 5: 'd3', 23: 'r2', E: '' },
-    3: { 0: 'd2', 5: '', 23: '', E: 4 },
-    4: { 0: '', 5: '', 23: 'r1', E: '' },
-  };
-  
-  // Pila para el analizador sintáctico
-  const stack = [];
-  // Entrada (cadena a analizar)
-  const input = analyzeInput("a + b"); // Ejemplo de entrada
-  
-  // Función de análisis sintáctico
-  export function analyze() {
-    let currentState = 0; // Estado inicial
-    let inputIndex = 0; // Índice de entrada
-  let a = 1;
-    while (true) {
-      const currentSymbol = input[inputIndex].id;
-      console.log(currentSymbol)
-      const action = lr1Table[currentState][currentSymbol];
-      console.log(action)
+// import the table that Define the table of the grammar
+import { lr1Table } from "./Gramatica";
+// import the classes that we are going to use for save the elements in the stack
+import { ElementoPila, Terminal, NoTerminal, Elemento } from "./ElementoPila";
 
-      if (!lr1Table[currentState][currentSymbol]) {
-        console.log(lr1Table[currentState][currentSymbol])
-        console.error('Error de análisis sintáctico');
-        break;
-      }
-  
-      if (action.startsWith('d')) {
-        // Desplazar
-        stack.push(currentSymbol);
-        stack.push(action.substr(1)); // Nuevo estado
-        inputIndex++;
-      } else if (action.startsWith('r')) {
-        // Reducción
-        const productionIndex = parseInt(action.substr(1));
-        // Realiza la reducción según la producción
-        reduce(productionIndex);
-      } else if (action === 'r1') {
-        // Aceptación
-        console.log('Análisis sintáctico completado con éxito');
-        break;
-      }
-    }
+// Main function to process the sintactic analysis
+export const analyze = (input) => {
+  // stack of elements (can be terminal, no terminal and element)
+  const stack = [];
+
+  // initialize the stack with "$0"
+  const terminalTope = new Terminal("$");
+  const terminalTope1 = new Terminal("0");
+  stack.push(terminalTope);
+  stack.push(terminalTope1);
+
+  // array of the tokens that was analyzed by the lexical analyzer.
+  const tokens = analyzeInput(input);
+  // the actual elements in the stack, are copied to the stack history
+  const stackCopy = [...stack];
+
+  const history = [];
+
+  // Expansion of the tokens
+  for (let token in tokens) {
+    // add to the input string a $ to the correct funcion of the Table LR1
+    //becouse we need to know when the string was finished
+    const inputCopy = input + "$";
+    const subString = inputCopy.substring(token); // to save all the process
+    const stackTop = stack[stack.length - 1].valorEP; // the row of the LR1 Table
+    const inputTop = tokens[token].shortened; // the column of the LR1 Table
+    const accion = lr1Table[stackTop][inputTop]; // the accion that was retuted by lr1Table
+    const stackCopy = [...stack]; // create a copy of the actual stack
+    // save the data of actual satck, input and the output
+    history.push({
+      stack: stackCopy,
+      input: subString,
+      output: accion,
+    });
+    // create new objects for the input and output and add them to the stack
+    const newTerminal = new Terminal(tokens[token]);
+    stack.push(newTerminal);
+    const newElemento = new Elemento(accion);
+    stack.push(newElemento);
   }
-  
-  // Función para realizar una reducción
-  function reduce(productionIndex) {
-    // Implementa las reducciones según las producciones de la gramática
-    switch (productionIndex) {
-      case 0:
-        // E → id + E
-        stack.pop(); // Pop 'E'
-        stack.pop(); // Pop '+'
-        stack.pop(); // Pop 'id'
-        stack.push('E'); // Push 'E'
-        // Realiza transición de estado según 'E'
-        currentState = stack[stack.length - 2];
-        stack.push(lr1Table[currentState]['E']);
-        break;
-  
-      case 2:
-        // E → id
-        stack.pop(); // Pop 'id'
-        stack.push('E'); // Push 'E'
-        // Realiza transición de estado según 'E'
-        currentState = stack[stack.length - 2];
-        stack.push(lr1Table[currentState]['E']);
-        break;
-  
-      default:
-        console.error('Error de reducción');
-        break;
+
+  // reduction of the input
+  while (true) {
+    const stackTop = stack[stack.length - 1].valorEP; // the last element that was added to the stack in the expansion
+    const inputTop = "$"; // the input is empty, so we need $ to the reduccion process
+    const accion = lr1Table[Math.abs(stackTop)][inputTop]; // the accion that was retuted by lr1Table
+    const numberToRemove = accion === -1 ? 6 : accion === -2 ? 4 : 0; // number of elements to remove of the stack
+    // if the accion doesn't exists, finish the reduction
+    if (!accion) {
+      break;
     }
+    // remove the element from the stack
+    for (let i = 0; i < numberToRemove; i++) {
+      stack.pop();
+    }
+    // Create new objects
+    const newNoTerminal = new NoTerminal("E");
+    stack.push(newNoTerminal);
+    const antepenultimate = stack[stack.length - 2].valorEP; // antepenultimate stack element
+    const stackTop1 = stack[stack.length - 1].valorEP; // last stack element
+    const accionInternStack = lr1Table[Math.abs(antepenultimate)][stackTop1]; // compare the last elemnt with the "E"
+    const newElemento = new Elemento(accionInternStack);
+    stack.push(newElemento);
+    // create a copy of the actual stack
+    const stackCopy1 = [...stack];
+    // The normal accion compare the las element of the stack with the input "$"
+    const accion2 = lr1Table[stack[stack.length - 1].valorEP][inputTop];
+    // save the data of actual satck, input and the output
+    history.push({
+      stack: stackCopy1,
+      input: "$",
+      output: accion2,
+    });
   }
-  
-  // Inicia el análisis sintáctico
-  //analyze();
-  
+  console.log("history final", history);
+  return history;
+};

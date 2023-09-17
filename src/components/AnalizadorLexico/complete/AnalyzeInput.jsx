@@ -40,6 +40,7 @@ export const analyzeInput = (inputText) => {
             lexema: char,
             token: tokenTypes[char].name,
             id: tokenTypes[char].id,
+            shortened: tokenTypes[char].shortened
           });
           currentToken = "";
         } else if (char === '$') {
@@ -47,6 +48,7 @@ export const analyzeInput = (inputText) => {
             lexema: char,
             token: tokenTypes["$"].name,
             id: tokenTypes["$"].id,
+            shortened: tokenTypes["$"].shortened
           });
         }
         break;
@@ -59,18 +61,21 @@ export const analyzeInput = (inputText) => {
               lexema: currentToken,
               token: tokenTypes[currentToken].name,
               id: tokenTypes[currentToken].id,
+              shortened: tokenTypes[currentToken].shortened
             });
           } else if (dataType.includes(currentToken)) {
             foundTokens.push({
               lexema: currentToken,
               token: tokenTypes["dataType"].name,
               id: tokenTypes["dataType"].id,
+              shortened: tokenTypes["dataType"].shortened
             });
           } else {
             foundTokens.push({
               lexema: currentToken,
               token: tokenTypes["id"].name,
               id: tokenTypes["id"].id,
+              shortened: tokenTypes["id"].shortened
             });
           }
           currentToken = "";
@@ -96,6 +101,9 @@ export const analyzeInput = (inputText) => {
             id: isFloatingPoint
               ? tokenTypes["constanteReal"].id
               : tokenTypes["constanteEntero"].id,
+            shortened: isFloatingPoint
+            ? tokenTypes["constanteReal"].shortened
+            : tokenTypes["constanteEntero"].shortened,
           });
           currentToken = "";
           state = 0; // Vuelve al estado inicial
@@ -112,6 +120,7 @@ export const analyzeInput = (inputText) => {
             lexema: currentToken,
             token: tokenTypes[currentToken].name,
             id: tokenTypes[currentToken].id,
+            shortened: tokenTypes[currentToken].shortened
           });
           currentToken = "";
           state = 0; // Vuelve al estado inicial
@@ -125,6 +134,7 @@ export const analyzeInput = (inputText) => {
             lexema: currentToken,
             token: tokenTypes["cadena"].name,
             id: tokenTypes["cadena"].id,
+            shortened: tokenTypes["cadena"].shortened
           });
           currentToken = "";
           state = 0; // Vuelve al estado inicial
@@ -137,6 +147,7 @@ export const analyzeInput = (inputText) => {
           lexema: currentToken,
           token: "Error",
           id: "Error",
+          shortened: "Error"
         });
         break;
     }
