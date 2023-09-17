@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { analyzeInput } from "./AnalyzeInput";
 import "../../../styles/lexicalAn.css";
 //2 hola23 25 24.23 80 + 90-10 mundo 80saludo d 3
@@ -39,13 +39,15 @@ const CompleteLexico = () => {
           <h2 className="tokensArea__title">Tokens:</h2>
           <table className="tokenArea__table">
             <tr className="tokenArea__row">
-              <th className="tokenArea__column">Symbol</th>
-              <th className="tokenArea__column">Value</th>
+              <th className="tokenArea__column">Lexema</th>
+              <th className="tokenArea__column">Token</th>
+              <th className="tokenArea__column">Id</th>
             </tr>
             {tokens.map((token, index) => (
               <tr key={index} className="tokenArea__row">
-                <td className="tokenArea__column">{token.symbol}</td>
-                <td className="tokenArea__column">{token.value}</td>
+                <td className="tokenArea__column">{token.lexema}</td>
+                <td className="tokenArea__column">{token.token}</td>
+                <td className="tokenArea__column">{token.id}</td>
               </tr>
             ))}
           </table>

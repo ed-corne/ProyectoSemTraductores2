@@ -1,173 +1,157 @@
-import { whoIsThisChar, dataTypes, reservedWords, types } from "./SymbolType";
+import {
+  tokenTypes,
+  keywords,
+  dataType,
+  operators,
+  punctuation,
+  digits,
+  letters,
+} from "./SymbolType";
 
 export const analyzeInput = (inputText) => {
   let currentToken = "";
-  let tokens = [];
-  let currentTokenSymbol = "";
-  let currentType = "";
+  const foundTokens = [];
+  const inputCode = inputText + "$";
 
-  const handleCurrentToken = (char, symbol) => {
-    currentToken += char;
-    currentTokenSymbol = symbol;
-  };
+  let state = 0; // Estado inicial
+  let isFloatingPoint = false;
 
-  const pushToken = () => {
-    if (currentToken !== "") {
-      tokens.push({
-        symbol: currentTokenSymbol,
-        type: types.unknown,
-        value: currentToken,
-      });
-      currentToken = "";
-      currentTokenSymbol = "";
-    }
-  };
+  for (let i = 0; i < inputCode.length; i++) {
+    const char = inputCode[i];
 
-  for (const char of inputText) {
-    switch (whoIsThisChar(char)) {
-      case "space":
-        if (currentToken in dataTypes) {
-          handleCurrentToken("", "dataType");
-        } else if (currentToken in reservedWords) {
-          handleCurrentToken("", "reservedWord");
-        }
-        pushToken();
-        break;
-      case "point":
-        if (currentTokenSymbol === "number" && !currentToken.includes(".")) {
-          handleCurrentToken(char, "real");
-        } else if (currentToken !== "") {
-          handleCurrentToken(char, "string");
-        }
-        break;
-      case "number":
-        if (currentTokenSymbol === "" || currentTokenSymbol === "number") {
-          handleCurrentToken(char, "number");
-        } else if (currentTokenSymbol === "real") {
-          handleCurrentToken(char, "real");
-        } else if (currentTokenSymbol === "id") {
-          handleCurrentToken(char, "id");
-        } else if (currentToken !== "") {
-          let tempChar = char;
-          pushToken();
-          currentToken = tempChar;
-        }
-        break;
-      case "letter":
-        if (currentTokenSymbol === "id" || currentTokenSymbol === "") {
-          handleCurrentToken(char, "id");
-        } else if (currentToken !== "") {
-          handleCurrentToken(char, "string");
+    switch (state) {
+      case 0:
+        if (char.charCodeAt(0) === 20) {
+          state = 0;
+        } else if (letters.test(char)) {
+          state = 1; // Estado para identificadores o palabras clave
+          currentToken += char;
+        } else if (digits.test(char)) {
+          state = 2; // Estado para números enteros
+          currentToken += char;
+        } else if (char === '"') {
+          state = 4; // Cambia al estado para cadenas
+          currentToken += char;
+        } else if (operators.includes(char)) {
+          state = 3; // Estado para operadores
+          currentToken += char;
+        } else if (punctuation.includes(char)) {
+          foundTokens.push({
+            lexema: char,
+            token: tokenTypes[char].name,
+            id: tokenTypes[char].id,
+            shortened: tokenTypes[char].shortened
+          });
+          currentToken = "";
+        } else if (char === '$') {
+          foundTokens.push({
+            lexema: char,
+            token: tokenTypes["$"].name,
+            id: tokenTypes["$"].id,
+            shortened: tokenTypes["$"].shortened
+          });
         }
         break;
-      case "addition":
-        if (currentTokenSymbol === "") {
-          handleCurrentToken(char, "addition");
-        } else if (
-          currentTokenSymbol === "number" ||
-          currentTokenSymbol === "real"
-        ) {
-          pushToken();
-          handleCurrentToken(char, "addition");
-          pushToken();
+      case 1:
+        if (letters.test(char) || digits.test(char)) {
+          currentToken += char;
+        } else {
+          if (keywords.includes(currentToken)) {
+            foundTokens.push({
+              lexema: currentToken,
+              token: tokenTypes[currentToken].name,
+              id: tokenTypes[currentToken].id,
+              shortened: tokenTypes[currentToken].shortened
+            });
+          } else if (dataType.includes(currentToken)) {
+            foundTokens.push({
+              lexema: currentToken,
+              token: tokenTypes["dataType"].name,
+              id: tokenTypes["dataType"].id,
+              shortened: tokenTypes["dataType"].shortened
+            });
+          } else {
+            foundTokens.push({
+              lexema: currentToken,
+              token: tokenTypes["id"].name,
+              id: tokenTypes["id"].id,
+              shortened: tokenTypes["id"].shortened
+            });
+          }
+          currentToken = "";
+          state = 0; // Vuelve al estado inicial
+          i--; // Revisa el caracter actual nuevamente
         }
         break;
-      case "multiplication":
-        if (currentTokenSymbol === "") {
-          handleCurrentToken(char, "multiplication");
-        } else if (
-          currentTokenSymbol === "number" ||
-          currentTokenSymbol === "real"
-        ) {
-          pushToken();
-          handleCurrentToken(char, "addition");
-          pushToken();
+      case 2:
+        if (digits.test(char)) {
+          currentToken += char;
+        } else if (char === ".") {
+          //state = 4; // Cambia al estado para números reales
+          currentToken += char;
+          isFloatingPoint = true; // Indica que es un número real
+        } else {
+          foundTokens.push({
+            lexema: isFloatingPoint
+              ? parseFloat(currentToken)
+              : parseInt(currentToken, 10),
+            token: isFloatingPoint
+              ? tokenTypes["constanteReal"].name
+              : tokenTypes["constanteEntero"].name,
+            id: isFloatingPoint
+              ? tokenTypes["constanteReal"].id
+              : tokenTypes["constanteEntero"].id,
+            shortened: isFloatingPoint
+            ? tokenTypes["constanteReal"].shortened
+            : tokenTypes["constanteEntero"].shortened,
+          });
+          currentToken = "";
+          state = 0; // Vuelve al estado inicial
+          i--; // Revisa el caracter actual nuevamente
+          isFloatingPoint = false; // Reinicia el estado de número real
         }
-        break;
-      case "relational":
-        if (currentToken === "" && char === "=") {
-          handleCurrentToken(char, "asignation");
-        } else if (currentToken === "" && char === "!") {
-          handleCurrentToken(char, "not");
-        } else if (currentToken === "") {
-          handleCurrentToken(char, "relational");
-        } else if (
-          currentToken !== "" &&
-          (currentTokenSymbol === "asignation" ||
-            currentTokenSymbol === "relational" ||
-            currentTokenSymbol === "not")
-        ) {
-          handleCurrentToken(char, "relational");
-        } else if (currentToken !== "") {
-          pushToken();
-          handleCurrentToken(char, "addition");
-          pushToken();
-        }
-        break;
-      case "and":
-        if (currentToken === "" || currentTokenSymbol === "and") {
-          handleCurrentToken(char, "and");
-        } else if (currentToken !== "") {
-          pushToken();
-          handleCurrentToken(char, "and");
-          pushToken();
-        }
-        break;
-      case "or":
-        if (currentToken === "" || currentTokenSymbol === "or") {
-          handleCurrentToken(char, "or");
-        } else if (currentToken !== "") {
-          pushToken();
-          handleCurrentToken(char, "or");
-          pushToken();
-        }
-        break;
-      case "brackets":
-        if (currentToken === "" || currentTokenSymbol === "brackets") {
-          handleCurrentToken(char, "brackets");
-        } else if (currentToken !== "") {
-          pushToken();
-          handleCurrentToken(char, "brackets");
-          pushToken();
-        }
-
-        break;
-      case "parenthesis":
-        if (currentToken === "" || currentTokenSymbol === "parenthesis") {
-          handleCurrentToken(char, "parenthesis");
-        } else if (currentToken !== "") {
-          pushToken();
-          handleCurrentToken(char, "parenthesis");
-          pushToken();
-        }
-
-        break;
-      case "semicolon":
-        if (currentToken === "" || currentTokenSymbol === "semicolon") {
-          handleCurrentToken(char, "semicolon");
-        } else if (currentToken !== "") {
-          pushToken();
-          handleCurrentToken(char, "semicolon");
-          pushToken();
-        }
-
         break;
 
+      case 3:
+        if (operators.includes(currentToken + char)) {
+          currentToken += char;
+        } else {
+          foundTokens.push({
+            lexema: currentToken,
+            token: tokenTypes[currentToken].name,
+            id: tokenTypes[currentToken].id,
+            shortened: tokenTypes[currentToken].shortened
+          });
+          currentToken = "";
+          state = 0; // Vuelve al estado inicial
+          i--; // Revisa el caracter actual nuevamente
+        }
+        break;
+      case 4: // Estado para cadenas
+        currentToken += char;
+        if (char === '"') {
+          foundTokens.push({
+            lexema: currentToken,
+            token: tokenTypes["cadena"].name,
+            id: tokenTypes["cadena"].id,
+            shortened: tokenTypes["cadena"].shortened
+          });
+          currentToken = "";
+          state = 0; // Vuelve al estado inicial
+        }
+        break;
       default:
-        handleCurrentToken(char, "string");
+        // Handle error state
+        currentToken += char;
+        foundTokens.push({
+          lexema: currentToken,
+          token: "Error",
+          id: "Error",
+          shortened: "Error"
+        });
         break;
     }
   }
 
-  if (currentToken !== "") {
-    tokens.push({
-      symbol: currentTokenSymbol,
-      type: types.unknown,
-      value: currentToken,
-    });
-  }
-
-  console.log(tokens);
-  //setTokens(tokens);
-  return tokens;
+  return foundTokens;
 };
