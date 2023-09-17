@@ -2,19 +2,19 @@
 
 🍀 En esta práctica se utilizo una pila de objetos, se creo una clase ElementoPila, y 3 mas que heredan de esta clase las cuales son **Terminal, NoTerminal y Elemento**.
 
-- [Clase Elemento pila](src/components/AnalizadorSintactico/Mini/ElementoPila.js)
+- [Clase Elemento pila](./src/components/AnalizadorSintactico/Mini/ElementoPila.js)
 
 🍃 Despues de esto se cargo la gramatica en una tabla **LR(1)**.
 
-- [Gramatica](src/components/AnalizadorSintactico/Mini/Gramatica.js)
+- [Gramatica](./src/components/AnalizadorSintactico/Mini/Gramatica.js)
 
 🌱 Posteriormente se creo una **funcion para analizar la entrada**, esto usando el analizador lexico para determinar los tokens y despues ya proceder con el algoritmo del analisis sintactico.
 
-- [Funcion para el analisis sintactico](src/components/AnalizadorSintactico/Mini/Analyze.js)
+- [Funcion para el analisis sintactico](./src/components/AnalizadorSintactico/Mini/Analyze.js)
 
 🌳 Finalmente solo se crea una **interfaz grafica** para renderizar la informacion del analisis.
 
-- [Componente que renderiza los datos del analisis.](src/components/AnalizadorSintactico/Mini/sintactic.jsx)
+- [Componente que renderiza los datos del analisis.](./src/components/AnalizadorSintactico/Mini/sintactic.jsx)
 
 ### 📷 Imagenes del funcionamiento del programa
 
