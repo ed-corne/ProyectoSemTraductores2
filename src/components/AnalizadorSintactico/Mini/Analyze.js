@@ -40,7 +40,7 @@ export const analyze = (input) => {
       output: accion,
     });
     // create new objects for the input and output and add them to the stack
-    const newTerminal = new Terminal(tokens[token]);
+    const newTerminal = new Terminal(tokens[token].lexema);
     stack.push(newTerminal);
     const newElemento = new Elemento(accion);
     stack.push(newElemento);
