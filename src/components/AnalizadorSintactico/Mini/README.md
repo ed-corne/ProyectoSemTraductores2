@@ -6,7 +6,7 @@
 
 🍃 Despues de esto se cargo la gramatica en una tabla **LR(1)**.
 
-- [Gramatica]((https://github.com/ed-corne/ProyectoSemTraductores2/blob/d089e8323c184778405a53108527beb4a6a938ca/src/components/AnalizadorSintactico/Mini/Gramatica.js)
+- [Gramatica](https://github.com/ed-corne/ProyectoSemTraductores2/blob/d089e8323c184778405a53108527beb4a6a938ca/src/components/AnalizadorSintactico/Mini/Gramatica.js)
 
 🌱 Posteriormente se creo una **funcion para analizar la entrada**, esto usando el analizador lexico para determinar los tokens y despues ya proceder con el algoritmo del analisis sintactico.
 
