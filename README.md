@@ -12,6 +12,7 @@
 5. [Mini analizador sintáctico (Excel)](./src/components/AnalizadorSintactico/exel/)
 6. [Mini analizador sintáctico (Codigo)](./src/components/AnalizadorSintactico/Mini/)
 7. [Analizador Sintáctico (Implementación usando Objetos)](./src/components/AnalizadorSintactico/Mini/)
+8. [Gramática del compilador](./src/components/AnalizadorSintactico/complete/)
 
 ## Estructura del Proyecto
 
