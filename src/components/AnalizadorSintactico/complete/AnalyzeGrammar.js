@@ -1,9 +1,9 @@
 // import the funcion to analyze the input, it is the lexical analyzer
 import { analyzeInput } from "../../AnalizadorLexico/complete/AnalyzeInput";
 // import the table that Define the table of the grammar
-import { lr1Table, lrTable } from "./Gramatica";
+import { lrTable } from "./Grammar";
 // import the classes that we are going to use for save the elements in the stack
-import { ElementoPila, Terminal, NoTerminal, Elemento } from "./ElementoPila";
+import { ElementoPila, Terminal, NoTerminal, Elemento } from "../Mini/ElementoPila"
 
 // Main function to process the sintactic analysis
 export const analyze = (input) => {
