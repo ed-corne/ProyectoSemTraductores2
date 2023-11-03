@@ -32,9 +32,6 @@ export const analyze = (input) => {
     const lexemas = tokens.slice(token).map((token) => token.lexema);
     const subString = lexemas.join(" ");
 
-    console.log("my test= ", subString);
-    //const inputCopy = input + "$";
-    //const subString = inputCopy.substring(token); // to save all the process
     const stackTop = stack[stack.length - 1].valorEP; // the row of the LR1 Table
     const inputTop = tokens[token].shortened; // the column of the LR1 Table
     const accion = lrTable[stackTop][inputTop]; // the accion that was retuted by lr1Table
