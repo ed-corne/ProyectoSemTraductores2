@@ -3,7 +3,14 @@ import { analyzeInput } from "../../AnalizadorLexico/complete/AnalyzeInput";
 // import the table that Define the table of the grammar
 import { lrTable } from "./Grammar";
 // import the classes that we are going to use for save the elements in the stack
-import { ElementoPila, Terminal, NoTerminal, Elemento } from "../Mini/ElementoPila"
+import {
+  ElementoPila,
+  Terminal,
+  NoTerminal,
+  Elemento,
+} from "../Mini/ElementoPila";
+//rules of the grammar
+import { rules } from "./Rules";
 
 // Main function to process the sintactic analysis
 export const analyze = (input) => {
@@ -18,13 +25,14 @@ export const analyze = (input) => {
 
   // array of the tokens that was analyzed by the lexical analyzer.
   const tokens = analyzeInput(input);
-  // the actual elements in the stack, are copied to the stack history
-  const stackCopy = [...stack];
+  console.log(tokens);
 
   const history = [];
-
   // Expansion of the tokens
-  for (let token in tokens) {
+  //for (let token in tokens)
+  let token = 0;
+  while (token < tokens.length) {
+    console.log("token=",token);
     // add to the input string a $ to the correct funcion of the Table LR1
     //becouse we need to know when the string was finished
     const inputCopy = input + "$";
@@ -32,6 +40,38 @@ export const analyze = (input) => {
     const stackTop = stack[stack.length - 1].valorEP; // the row of the LR1 Table
     const inputTop = tokens[token].shortened; // the column of the LR1 Table
     const accion = lrTable[stackTop][inputTop]; // the accion that was retuted by lr1Table
+    console.log("accion", token, " = ", accion);
+    console.log(stack);
+    // validate if the accion is a reduccion or not ******
+
+    if (accion < 0) {
+      const rule = rules[Math.abs(accion)];
+      // remove the element from the stack
+      for (let i = 0; i < rule.symbolsNumber * 2; i++) {
+        console.log("pop", stack.pop())
+      }
+
+      const newStackTop = stack[stack.length - 1].valorEP;
+
+      console.log("stacktop", stackTop, "rule.noterminal", rule.noTerminal)
+      const accion2 = lrTable[newStackTop][rule.noTerminal]; //posible error
+      console.log("accion2", token, " = ", accion2)
+
+      const newNoTerminal = new NoTerminal(rule.noTerminal); // only the first element
+      stack.push(newNoTerminal);
+
+      const newElemento = new Elemento(accion2);
+      stack.push(newElemento);
+
+    } else {
+      // create new objects for the input and output and add them to the stack
+      const newTerminal = new Terminal(tokens[token].lexema);
+      stack.push(newTerminal);
+      const newElemento = new Elemento(accion);
+      stack.push(newElemento);
+      token++;
+    }
+
     const stackCopy = [...stack]; // create a copy of the actual stack
     // save the data of actual satck, input and the output
     history.push({
@@ -39,13 +79,9 @@ export const analyze = (input) => {
       input: subString,
       output: accion,
     });
-    // create new objects for the input and output and add them to the stack
-    const newTerminal = new Terminal(tokens[token].lexema);
-    stack.push(newTerminal);
-    const newElemento = new Elemento(accion);
-    stack.push(newElemento);
   }
 
+  /*
   // reduction of the input
   while (true) {
     const stackTop = stack[stack.length - 1].valorEP; // the last element that was added to the stack in the expansion
@@ -79,6 +115,7 @@ export const analyze = (input) => {
       output: accion2,
     });
   }
+  */
   console.log("history final", history);
   return history;
 };
