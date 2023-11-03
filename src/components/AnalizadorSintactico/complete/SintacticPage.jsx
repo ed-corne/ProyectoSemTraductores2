@@ -39,19 +39,23 @@ const SintacticPage = () => {
         <div className="tokensArea">
           <h2 className="tokensArea__title">Syntactic analysis</h2>
           <table className="tokenArea__table">
-            <tr className="tokenArea__row">
-              <th className="tokenArea__column">Stack</th>
-              <th className="tokenArea__column">Input</th>
-              <th className="tokenArea__column">Output</th>
-            </tr>
-            {sintacticData.map((process, index) => (
-              <tr key={index} className="table__row">
-                <td className="table__column">
-                  {process.stack.map((item) => item.valorEP)}
-                </td>
-                <td className="table__column">{process.input}</td>
-                <td className="table__column">{process.output}</td>
+            <thead className="tokenArea__row">
+              <tr>
+                <th className="tokenArea__column">Stack</th>
+                <th className="tokenArea__column">Input</th>
+                <th className="tokenArea__column">Output</th>
               </tr>
+            </thead>
+            {sintacticData.map((process, index) => (
+              <tbody key={index} className="table__row">
+                <tr>
+                  <td className="table__column">
+                    {process.stack.map((item) => item.valorEP)}
+                  </td>
+                  <td className="table__column">{process.input}</td>
+                  <td className="table__column">{process.output}</td>
+                </tr>
+              </tbody>
             ))}
           </table>
         </div>
