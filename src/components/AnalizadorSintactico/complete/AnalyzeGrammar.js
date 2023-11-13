@@ -22,11 +22,12 @@ export const analyze = (input) => {
 
   // array of the tokens that was analyzed by the lexical analyzer.
   const tokens = analyzeInput(input);
-  console.log(tokens);
 
   const history = []; // to save all the process
   // expantion and reduccion of the input
   let token = 0;
+  let tree = [];
+  let children = [];
   try {
     while (token < tokens.length) {
       //crste a new array from token to the end of the array and extract only lexema value
@@ -35,7 +36,6 @@ export const analyze = (input) => {
 
       const stackTop = stack[stack.length - 1].valorEP; // the row of the LR1 Table
       const inputTop = tokens[token].shortened; // the column of the LR1 Table
-      console.log(stackTop, "--", inputTop);
       const accion = lrTable[stackTop][inputTop]; // the accion that was retuted by lr1Table
 
       const stackCopy = [...stack]; // create a copy of the actual stack
@@ -53,8 +53,24 @@ export const analyze = (input) => {
         const rule = rules[Math.abs(accion)];
 
         // remove elements from the stack
-        for (let i = 0; i < rule.symbolsNumber * 2; i++) {
-          stack.pop();
+        if (rule.symbolsNumber > 0) {
+          for (let i = 0; i < rule.symbolsNumber * 2; i++) {
+            stack.pop();
+          }
+
+          if (tree.length === 0) {
+            tree = { name: `${rule.noTerminal}`, children: children };
+          } else {
+            let tempTree = tree;
+            tree = {
+              name: `${rule.noTerminal}`,
+              children:
+                children.length > 0 ? [tempTree, { children }] : [tempTree],
+            };
+          }
+          children = [];
+        } else {
+          children.push({ name: `${rule.noTerminal}` });
         }
 
         const stackTop = stack[stack.length - 1].valorEP; //new stackTop after remove elements from the stack
@@ -66,8 +82,8 @@ export const analyze = (input) => {
 
         const newElemento = new Elemento(reductionAccion); // add the element to the stack
         stack.push(newElemento);
-        console.log(stack);
       } else {
+        children.push({ name: `${tokens[token].lexema}` });
         //expantion
         // create new objects for the input and output and add them to the stack
         const newTerminal = new Terminal(tokens[token].lexema);
@@ -82,5 +98,6 @@ export const analyze = (input) => {
   }
   console.log(stack);
   console.log("history final", history);
-  return history;
+  console.log("tree final", tree);
+  return [history, tree];
 };

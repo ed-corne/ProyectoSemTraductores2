@@ -1,15 +1,19 @@
 import React, { useState } from "react";
 import { analyze } from "./AnalyzeGrammar";
 import "../../../styles/sintactic.css";
+import TreeComponent from "./TreeComponent";
 
 const SintacticPage = () => {
   const [input, setInput] = useState(""); // Entrada del usuario
   const [sintacticData, setSintacticData] = useState([]);
   const [showTable, setShowTable] = useState(false);
   const [transitionTable, setTransitionTable] = useState("in:wipe:down");
+  const [treeData, setTreeData] = useState([]);
 
   const handleSintacticAnalyze = () => {
-    setSintacticData(analyze(input));
+    const values = analyze(input);
+    setSintacticData(values[0]);
+    setTreeData(values[1]);
     setTransitionTable("in:wipe:down");
     setShowTable(true);
   };
@@ -24,9 +28,9 @@ const SintacticPage = () => {
       <h2 className="mainContainer__title">Sintactic analyzer </h2>
 
       <div className="codeContainer">
-        <h2 className="subTitle">Inputs</h2>
+        <h2 className="subTitle">Input</h2>
         <textarea
-          placeholder="Ingrese la entrada aquí"
+          placeholder="Enter the text to analyze"
           value={input}
           onChange={(e) => setInput(e.target.value)}
           className="codeContainer__area shadow-drop-center"
@@ -35,13 +39,19 @@ const SintacticPage = () => {
           <button onClick={clean} className="--clean scale-down-center">
             Clean
           </button>
-          <button onClick={handleSintacticAnalyze} className=" --analyze scale-down-center ">
+          <button
+            onClick={handleSintacticAnalyze}
+            className=" --analyze scale-down-center "
+          >
             Analyze
           </button>
         </div>
       </div>
       {showTable && (
-        <div  className="processContainer table-container" transition-style={transitionTable}>
+        <div
+          className="processContainer table-container"
+          transition-style={transitionTable}
+        >
           <h2 className="subTitle">Syntactic analysis</h2>
           <table className="processContainer__table">
             <tr className="tableHead">
@@ -59,6 +69,9 @@ const SintacticPage = () => {
               </tr>
             ))}
           </table>
+          <div className="processContainer__table tree">
+            <TreeComponent treeData={treeData} />
+          </div>
         </div>
       )}
     </div>
