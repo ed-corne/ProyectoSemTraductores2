@@ -94,10 +94,12 @@ export const analyze = (input) => {
       }
     }
   } catch (e) {
-    console.error(e);
+    return { history: history, tree: tree, error: true };
+    //return false;
+    //console.error(e);
   }
   console.log(stack);
   console.log("history final", history);
   console.log("tree final", tree);
-  return [history, tree];
+  return { history: history, tree: tree, error: false };
 };

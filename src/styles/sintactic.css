@@ -122,6 +122,22 @@
   border-radius: 10px;
 }
 
+.msg{
+ font-size: 2em;
+ text-align: start;
+ width: 100%;
+}
+
+.valid{
+  color: #63ef4e;
+  text-shadow: 0 0 10px rgb(155, 255, 155);
+}
+
+.invalid{
+  color: #ef6e4e;
+  text-shadow: 0 0 10px rgb(255, 190, 190);
+}
+
 @keyframes wipe-in-down {
   from {
     clip-path: inset(0 0 100% 0);

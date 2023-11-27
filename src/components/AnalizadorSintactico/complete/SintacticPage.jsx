@@ -9,11 +9,21 @@ const SintacticPage = () => {
   const [showTable, setShowTable] = useState(false);
   const [transitionTable, setTransitionTable] = useState("in:wipe:down");
   const [treeData, setTreeData] = useState([]);
+  const [error, setError] = useState(false);
+  const [showErrorMsg, setShowErrorMsg] = useState(false);
 
   const handleSintacticAnalyze = () => {
     const values = analyze(input);
-    setSintacticData(values[0]);
-    setTreeData(values[1]);
+    console.log(values.error);
+    if (values.error === true) {
+      setShowErrorMsg(true);
+      setError(true);
+    }else{
+      setShowErrorMsg(true);
+      setError(false);
+    }
+    setSintacticData(values.history);
+    setTreeData(values.tree);
     setTransitionTable("in:wipe:down");
     setShowTable(true);
   };
@@ -21,6 +31,7 @@ const SintacticPage = () => {
   const clean = () => {
     setInput("");
     setTransitionTable("out:wipe:up");
+    setShowErrorMsg(false)
   };
 
   return (
@@ -36,6 +47,13 @@ const SintacticPage = () => {
           className="codeContainer__area shadow-drop-center"
         />
         <div className="btnsContaniner">
+          {showErrorMsg ? (
+            error ? (
+              <h2 className="msg invalid">Invalid Input</h2>
+            ) : (
+              <h2 className="msg valid">Valid Input</h2>
+            )
+          ) : null}
           <button onClick={clean} className="--clean scale-down-center">
             Clean
           </button>
@@ -69,9 +87,11 @@ const SintacticPage = () => {
               </tr>
             ))}
           </table>
-          <div className="processContainer__table tree">
-            <TreeComponent treeData={treeData} />
-          </div>
+          {!error && (
+            <div className="processContainer__table tree">
+              <TreeComponent treeData={treeData} />
+            </div>
+          )}
         </div>
       )}
     </div>
