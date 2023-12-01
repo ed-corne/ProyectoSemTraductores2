@@ -7,11 +7,23 @@
 ### 🍀 Analizador Léxico 
 1. [¿Qué es es un analizador léxico ?](./src/components/AnalizadorLexico)
 2. [Mini generador léxico ](./src/components/AnalizadorLexico/mini/)
-3. [Analizador léxico completo.](./src/components/AnalizadorLexico/complete/)
+3. [➡️ Analizador léxico completo.](./src/components/AnalizadorLexico/complete/)
+
+
 ### 🌿 Analizador Sintáctico 
 5. [Mini analizador sintáctico (Excel)](./src/components/AnalizadorSintactico/exel/)
 6. [Mini analizador sintáctico (Codigo)](./src/components/AnalizadorSintactico/Mini/)
 7. [Analizador Sintáctico (Implementación usando Objetos)](./src/components/AnalizadorSintactico/Mini/)
+8. [Gramática del compilador](./src/components/AnalizadorSintactico/complete/AnalyzeGrammar.js)
+9. [➡️ Etapa Analizador Sintactico](./src/components/AnalizadorSintactico/complete/)
+
+### 🌱 Analizador Semantico 
+1. [➡️ Etapa Analizador Semantico](./src/components/AnalizadorSemantico/)
+
+### 🍃 Generacion de codigo
+
+1. [➡️ Etapa Analizador generacion de codigo](./src/components/GeneracionCodigo/)
+
 
 ## Estructura del Proyecto
 
@@ -19,6 +31,8 @@
   - `components/`: Componentes de React utilizados en la interfaz de usuario.
     - `AnalizadorLexico/`: Dentro de esta carpeta se encuentran todos los archivos para la parte del analizador lexico
     - `AnalizadorSintactico/`: Dentro de esta carpeta se encuentran todos los archivos para la parte del analizador Sintactico
+     - `AnalizadorSemantico/`: Dentro de esta carpeta se encuentran todos los archivos para la parte del analizador Semantico
+      - `GeneracionCodigo/`: Dentro de esta carpeta se encuentran todos los archivos para la parte de generacion de codigo
   - `App.js`: Punto de entrada de la aplicación React.
   - `index.css`: Estilos globales de la aplicación.
   - `main.js`: Punto de entrada para el archivo de configuración de Vite.

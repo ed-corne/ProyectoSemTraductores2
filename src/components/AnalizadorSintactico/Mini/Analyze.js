@@ -1,7 +1,7 @@
 // import the funcion to analyze the input, it is the lexical analyzer
 import { analyzeInput } from "../../AnalizadorLexico/complete/AnalyzeInput";
 // import the table that Define the table of the grammar
-import { lr1Table } from "./Gramatica";
+import { lr1Table, lrTable } from "./Gramatica";
 // import the classes that we are going to use for save the elements in the stack
 import { ElementoPila, Terminal, NoTerminal, Elemento } from "./ElementoPila";
 
@@ -31,7 +31,7 @@ export const analyze = (input) => {
     const subString = inputCopy.substring(token); // to save all the process
     const stackTop = stack[stack.length - 1].valorEP; // the row of the LR1 Table
     const inputTop = tokens[token].shortened; // the column of the LR1 Table
-    const accion = lr1Table[stackTop][inputTop]; // the accion that was retuted by lr1Table
+    const accion = lrTable[stackTop][inputTop]; // the accion that was retuted by lr1Table
     const stackCopy = [...stack]; // create a copy of the actual stack
     // save the data of actual satck, input and the output
     history.push({
@@ -50,7 +50,7 @@ export const analyze = (input) => {
   while (true) {
     const stackTop = stack[stack.length - 1].valorEP; // the last element that was added to the stack in the expansion
     const inputTop = "$"; // the input is empty, so we need $ to the reduccion process
-    const accion = lr1Table[Math.abs(stackTop)][inputTop]; // the accion that was retuted by lr1Table
+    const accion = lrTable[Math.abs(stackTop)][inputTop]; // the accion that was retuted by lr1Table
     const numberToRemove = accion === -1 ? 6 : accion === -2 ? 4 : 0; // number of elements to remove of the stack
     // if the accion doesn't exists, finish the reduction
     if (!accion) {
@@ -65,13 +65,13 @@ export const analyze = (input) => {
     stack.push(newNoTerminal);
     const antepenultimate = stack[stack.length - 2].valorEP; // antepenultimate stack element
     const stackTop1 = stack[stack.length - 1].valorEP; // last stack element
-    const accionInternStack = lr1Table[Math.abs(antepenultimate)][stackTop1]; // compare the last elemnt with the "E"
+    const accionInternStack = lrTable[Math.abs(antepenultimate)][stackTop1]; // compare the last elemnt with the "E"
     const newElemento = new Elemento(accionInternStack);
     stack.push(newElemento);
     // create a copy of the actual stack
     const stackCopy1 = [...stack];
     // The normal accion compare the las element of the stack with the input "$"
-    const accion2 = lr1Table[stack[stack.length - 1].valorEP][inputTop];
+    const accion2 = lrTable[stack[stack.length - 1].valorEP][inputTop];
     // save the data of actual satck, input and the output
     history.push({
       stack: stackCopy1,
