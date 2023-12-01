@@ -5,7 +5,7 @@ const Home = () => {
   return (
     <div className="homePage">
       <div className="homePage__menu">
-        <h1 className="homePage__title">Analadores</h1>
+        <h1 className="homePage__title">Analizadores</h1>
         <Link to="/mini" className="homePage__link">
           Lexico Mini
         </Link>
