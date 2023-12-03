@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { analyze } from "./AnalyzeGrammar";
 import "../../../styles/sintactic.css";
 import TreeComponent from "./TreeComponent";
+import App from "../../GeneracionCodigo/App";
 
 const SintacticPage = () => {
   const [input, setInput] = useState(""); // Entrada del usuario
@@ -11,6 +12,7 @@ const SintacticPage = () => {
   const [treeData, setTreeData] = useState([]);
   const [error, setError] = useState(false);
   const [showErrorMsg, setShowErrorMsg] = useState(false);
+  const [showCode, setShowCode] = useState(false);
 
   const handleSintacticAnalyze = () => {
     const values = analyze(input);
@@ -18,9 +20,11 @@ const SintacticPage = () => {
     if (values.error === true) {
       setShowErrorMsg(true);
       setError(true);
-    }else{
+      setShowCode(false);
+    } else {
       setShowErrorMsg(true);
       setError(false);
+      setShowCode(true);
     }
     setSintacticData(values.history);
     setTreeData(values.tree);
@@ -31,7 +35,7 @@ const SintacticPage = () => {
   const clean = () => {
     setInput("");
     setTransitionTable("out:wipe:up");
-    setShowErrorMsg(false)
+    setShowErrorMsg(false);
   };
 
   return (
@@ -47,6 +51,7 @@ const SintacticPage = () => {
           className="codeContainer__area shadow-drop-center"
         />
         <div className="btnsContaniner">
+         
           {showErrorMsg ? (
             error ? (
               <h2 className="msg invalid">Invalid Input</h2>
@@ -54,6 +59,11 @@ const SintacticPage = () => {
               <h2 className="msg valid">Valid Input</h2>
             )
           ) : null}
+           {showCode && (
+            <div>
+              <App input={input} />
+            </div>
+          )}
           <button onClick={clean} className="--clean scale-down-center">
             Clean
           </button>
