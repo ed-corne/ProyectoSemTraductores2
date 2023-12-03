@@ -35,6 +35,7 @@ const TreeComponent = ({ treeData }) => {
       data={treeData}
       orientation="vertical"
       translate={{ x: 100, y: 200 }}
+      svgClassName="border"
     />
   );
 };
