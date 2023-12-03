@@ -11,7 +11,7 @@ npm install express body-parser child_process
 
 🌱 Despues fue necesario levantar un servidor y crear un endpoint el cual recibe el codigo en c y este lo traduce a codigo ensamblador y lo devuelve.
 
-- [➡️ Archivio Server.js](../../AnalizadorLexico/complete/)
+- [➡️ Archivio Server.js](./server.js)
 
 🪴 Ya con el servidor creado simplemente lo ejecutamos, usando el siguiente comando.
 
@@ -35,7 +35,7 @@ const result = await response.json();
 
 🌳 Y despues de que se completo la peticion, los resultados se muestran en un modal en el Frontend.
 
-- [➡️ Modal con resultados](../../AnalizadorLexico/complete/)
+- [➡️ Modal con resultados](./App.jsx)
 
 ### 📷 Imagenes del funcionamiento 
 
