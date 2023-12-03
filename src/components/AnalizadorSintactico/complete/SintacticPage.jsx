@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { analyze } from "./AnalyzeGrammar";
 import "../../../styles/sintactic.css";
+import "../../../styles/generateCode.css";
 import TreeComponent from "./TreeComponent";
 import App from "../../GeneracionCodigo/App";
 
@@ -13,6 +14,8 @@ const SintacticPage = () => {
   const [error, setError] = useState(false);
   const [showErrorMsg, setShowErrorMsg] = useState(false);
   const [showCode, setShowCode] = useState(false);
+  const [showTree, setShowTree] = useState(false);
+  const [showTreeModal, setShowTreeModal] = useState(false);
 
   const handleSintacticAnalyze = () => {
     const values = analyze(input);
@@ -21,10 +24,12 @@ const SintacticPage = () => {
       setShowErrorMsg(true);
       setError(true);
       setShowCode(false);
+      setShowTree(false);
     } else {
       setShowErrorMsg(true);
       setError(false);
       setShowCode(true);
+      setShowTree(true);
     }
     setSintacticData(values.history);
     setTreeData(values.tree);
@@ -36,8 +41,13 @@ const SintacticPage = () => {
     setInput("");
     setTransitionTable("out:wipe:up");
     setShowErrorMsg(false);
+    setShowTree(false);
+    setShowCode(false);
   };
 
+  const handleShowTree = () => {
+    setShowTreeModal(!showTreeModal);
+  };
   return (
     <div className="mainContainer" transition-style={"in:wipe:down"}>
       <h2 className="mainContainer__title">Sintactic analyzer </h2>
@@ -51,7 +61,6 @@ const SintacticPage = () => {
           className="codeContainer__area shadow-drop-center"
         />
         <div className="btnsContaniner">
-         
           {showErrorMsg ? (
             error ? (
               <h2 className="msg invalid">Invalid Input</h2>
@@ -59,9 +68,16 @@ const SintacticPage = () => {
               <h2 className="msg valid">Valid Input</h2>
             )
           ) : null}
-           {showCode && (
+          {showCode && (
             <div>
               <App input={input} />
+            </div>
+          )}
+          {showTree && (
+            <div>
+              <button onClick={handleShowTree} className="btn_tree">
+                Show Tree
+              </button>
             </div>
           )}
           <button onClick={clean} className="--clean scale-down-center">
@@ -97,11 +113,17 @@ const SintacticPage = () => {
               </tr>
             ))}
           </table>
-          {!error && (
-            <div className="processContainer__table tree">
-              <TreeComponent treeData={treeData} />
-            </div>
-          )}
+        </div>
+      )}
+      {showTreeModal && (
+        <div className="modal">
+          <div className="result tree">
+            <h2 className="title_modal color">Arbol</h2>
+            <TreeComponent treeData={treeData} />
+            <button onClick={handleShowTree} className="close">
+              Close
+            </button>
+          </div>
         </div>
       )}
     </div>

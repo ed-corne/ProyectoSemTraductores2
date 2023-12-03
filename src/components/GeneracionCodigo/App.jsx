@@ -33,11 +33,11 @@ const App = ({ input }) => {
 
   return (
     <div className="App">
-      <button onClick={handleConvert} className="btn_code">Codigo Ensamblador</button>
+      <button onClick={handleConvert} className="btn_code">Assembly Code</button>
       {showCode && (
         <div className="modal">
           <div className="result">
-            <h2 className="title">Resultado en Ensamblador</h2>
+            <h2 className="title_modal">Result Assembly Code</h2>
             <pre>{assemblyCode}</pre>
             <button onClick={handleShowCode} className="close">Close</button>
           </div>
